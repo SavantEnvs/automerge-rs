@@ -1,0 +1,40 @@
+[package]
+# MAYHEM: additive fuzz crate. Upstream ships its own fuzz/ at rust/automerge/fuzz with a
+# single target (`load`) — we cannot add a second [[bin]] there without modifying a
+# file upstream tracks (breaks the additive-only invariant), so this crate hosts BOTH:
+#   - load.rs         byte-for-byte copy of upstream's rust/automerge/fuzz/fuzz_targets/load.rs
+#   - sync_message.rs new: fuzzes the sync-protocol wire decoder (automerge::sync::Message::decode)
+name = "automerge-mayhem-fuzz"
+version = "0.0.0"
+publish = false
+edition = "2021"
+
+[package.metadata]
+cargo-fuzz = true
+
+[dependencies]
+libfuzzer-sys = "0.4"
+leb128 = "^0.2.5"
+sha2 = "^0.10.0"
+
+[dependencies.automerge]
+path = "../../rust/automerge"
+
+# Prevent this from interfering with the upstream rust/ workspace.
+[workspace]
+members = ["."]
+
+[profile.release]
+debug = 1
+
+[[bin]]
+name = "load"
+path = "fuzz_targets/load.rs"
+test = false
+doc = false
+
+[[bin]]
+name = "sync_message"
+path = "fuzz_targets/sync_message.rs"
+test = false
+doc = false

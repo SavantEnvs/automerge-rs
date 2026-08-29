@@ -1,0 +1,11 @@
+project: savantenvs/automerge-rs
+target: load
+
+testsuite:
+  - https://$MAYHEM_DOMAIN/$MAYHEM_PROJECT/$MAYHEM_TARGET/testsuite.tar   # accumulation (REQUIRED)
+  - file://mayhem/load/testsuite                                          # per-target starter seeds
+
+cmds:
+  - cmd: /mayhem/load
+    libfuzzer: true
+    timeout: 30

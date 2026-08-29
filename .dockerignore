@@ -1,0 +1,19 @@
+# .dockerignore for the commit-image build.
+# Goal: bake in the FULL repo (including .git history — the grader uses it),
+# dropping only local build artifacts and editor/OS cruft. Dev image, not minimal.
+
+# ── Rust build outputs ───────────────────────────────────────────────────────
+target/
+mayhem/fuzz/target/
+mayhem/kat/target/
+**/*.rs.bk
+
+# ── JS/TS build outputs ──────────────────────────────────────────────────────
+node_modules/
+dist/
+*.tsbuildinfo
+
+# ── Editor / OS noise ────────────────────────────────────────────────────────
+.DS_Store
+*.swp
+*~
