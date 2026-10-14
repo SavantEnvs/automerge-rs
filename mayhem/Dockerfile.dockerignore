@@ -1,0 +1,10 @@
+# Per-Dockerfile ignore for `docker build -f mayhem/Dockerfile` (BuildKit gives this file
+# precedence over a context-root .dockerignore, which this repo doesn't have). Keeps stray
+# LOCAL build artifacts (cargo-fuzz's own target/ dirs, produced by iterating on this port
+# outside the image) out of the build context -- they're already covered by mayhem/.gitignore
+# so never get committed, but an uncommitted leftover would otherwise still get COPY'd into
+# the image and can trip the "no baked-in ASan option overrides" check with a stale prebuilt
+# binary. Keep .git (the grader needs full history) and every source/test/fixture file.
+mayhem/fuzz/target
+rust/**/target
+target
