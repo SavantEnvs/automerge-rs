@@ -1,0 +1,28 @@
+[package]
+# MAYHEM (mining branch): additive fuzz crate hosting the `rollback` harness.
+name = "automerge-mayhem-fuzz"
+version = "0.0.0"
+publish = false
+edition = "2021"
+
+[package.metadata]
+cargo-fuzz = true
+
+[dependencies]
+libfuzzer-sys = "0.4"
+
+[dependencies.automerge]
+path = "../../rust/automerge"
+
+# Prevent this from interfering with the upstream rust/ workspace.
+[workspace]
+members = ["."]
+
+[profile.release]
+debug = 1
+
+[[bin]]
+name = "rollback"
+path = "fuzz_targets/rollback.rs"
+test = false
+doc = false

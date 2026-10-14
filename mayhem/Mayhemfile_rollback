@@ -1,0 +1,11 @@
+project: savantenvs/automerge-rs
+target: rollback-mined-c911a61
+
+testsuite:
+  - https://$MAYHEM_DOMAIN/$MAYHEM_PROJECT/$MAYHEM_TARGET/testsuite.tar   # accumulation (REQUIRED)
+  - file://mayhem/rollback-mined-c911a61/testsuite                                          # per-target starter seeds
+
+cmds:
+  - cmd: /mayhem/rollback
+    libfuzzer: true
+    timeout: 30
